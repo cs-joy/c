@@ -4,17 +4,11 @@
 #include<ctype.h> // igdigit()
 
 // use define data type
-// struct Stack 
-// {
-//     int top;
-//     unsigned capacity;
-//     int* array;
-// };
-
-struct Stack {
-	int top;
-	unsigned capacity;
-	int* array;
+struct Stack 
+{
+    int top;
+    unsigned capacity;
+    int* array;
 };
 
 // Stack operation
@@ -42,7 +36,7 @@ struct Stack* createStack(unsigned capacity)
 // check if stack is empty or not
 int checkEmpty(struct Stack* stack)
 {
-    return stack->top = -1;
+    return stack->top == -1;
 }
 
 // pop out operands from stack
@@ -121,3 +115,12 @@ int main()
 
     return 0;
 }
+
+
+/**
+ * 
+ * There are the following limitations of the above implementation. 
+        * It supports only 4 binary operators ‘+’, ‘*’, ‘-‘ and ‘/’. It can be extended for more operators by adding more switch cases. 
+        * The allowed operands are only single-digit operands.
+ * 
+*/
