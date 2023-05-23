@@ -4,6 +4,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
+
 int ch;
 void menu();
 char* convert(char* infix);
@@ -18,7 +20,6 @@ void getInput()
 {
     printf("Enter infix expression: ");
     scanf("%s", infix);
-    menu();
 }
 
 void display()
@@ -28,7 +29,6 @@ void display()
     char* postfix = convert(infix);
     printf("%s\n", postfix);
     free(postfix);
-    menu();
 }
 
 void out()
@@ -59,6 +59,7 @@ int isOperator(char op)
     return (op == '+' || op == '-' || op == '*' || op == '/' || op == '^');
 }
 
+char infix[MAX_EXPR_SIZE] = "a+b*(c^d-e)^(f+g*h)-i";
 
 char* convert(char* infix)
 {
@@ -85,11 +86,11 @@ char* convert(char* infix)
         }
         else if (infix[i] == ')')
         {
-            while(top > -1 && stack[top] == '(')
+            while(top > -1 && stack[top] != '(')
             {
                 postfix[j++] = stack[top--];
             }
-            if (top > -1 && stack[top] == ')')
+            if (top > -1 && stack[top] != '(')
             {
                 return "Invalid Expression";
             } else {
@@ -102,7 +103,7 @@ char* convert(char* infix)
             {
                 postfix[j++] = stack[top--];
             }
-            stack[top++] = infix[i];
+            stack[++top] = infix[i];
         }
     }
     
@@ -116,7 +117,6 @@ char* convert(char* infix)
         postfix[j++] = stack[top--];
     }
     postfix[j] = '\0';
-    
     
     return postfix;
 }
@@ -144,9 +144,11 @@ void menu()
     {
         case 1:
           getInput();
+          menu();
           break;
         case 2:
-          convert();
+          convert(infix);
+          menu();
           break;
         case 3:
           evaluate();
