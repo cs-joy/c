@@ -11,7 +11,7 @@ int evaluatePostfix(char* postfix);
 int evaluateResult;
 void display();
 
-#define MAX_EXPR_SIZE 100
+#define MAX_EXPR_SIZE 1000
 char infix[MAX_EXPR_SIZE];
 
 void out()
@@ -213,7 +213,7 @@ void display(char* infix)
 {
     
     char* p = infixToPostfix(infix);
-    printf("Result= %d\n", evaluatePostfix(p));
+    printf("The infix expression \"%s\" converts to the postfix expression \"%s\" and evaluates to \"%d\".\n\n", infix, p, evaluatePostfix(p));
     
     menu();
 }
@@ -237,7 +237,7 @@ void menu()
     switch(choice)
     {
         case 1:
-          printf("enter exp: ");
+          printf("Enter Expression: ");
           scanf("%s", infix);
           menu();
           break;
@@ -245,7 +245,7 @@ void menu()
           postfix = infixToPostfix(infix);
           if (postfix)
           {
-            printf("successfully converted into postfix expression!\n");
+            printf("successfully converted into postfix expression!\n\n");
           }
           menu();
           break;
@@ -253,7 +253,7 @@ void menu()
           evaluateResult = evaluatePostfix(infixToPostfix(infix));
           if (evaluateResult)
           {
-            printf("successfully evaluated the postfix expression!\n");
+            printf("successfully evaluated the postfix expression!\n\n");
           }
           free(postfix);
           menu();
