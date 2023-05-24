@@ -2,29 +2,17 @@
 #include<stdlib.h> // malloc()
 #include<string.h> // strlen()
 #include<ctype.h> // igdigit()
-int ch;
+
 void menu();
 char* postfix;
+
+char* infixToPostfix(char* infix);
+int evaluatePostfix(char* postfix);
 int evaluateResult;
-void evaluate();
 void display();
 
 #define MAX_EXPR_SIZE 100
 char infix[MAX_EXPR_SIZE];
-
-void getInput()
-{
-    char infix[MAX_EXPR_SIZE] = "(5 + 3) * 2 - 4 / (1 + 2)";
-    printf("Enter infix expression: ");
-    scanf("%s", infix);
-}
-
-void display()
-{
-    printf("\n%d", evaluateResult);
-    
-    menu();
-}
 
 void out()
 {
@@ -215,12 +203,20 @@ int evaluatePostfix(char* postfixExpression)
             }
         }
     }
-    //menu();
+
     return pop(stack);
     
 }
+char infix[MAX_EXPR_SIZE];
 
-
+void display(char* infix)
+{
+    
+    char* p = infixToPostfix(infix);
+    printf("Result= %d\n", evaluatePostfix(p));
+    
+    menu();
+}
 
 /////////////////////////////////
 // Main menu
@@ -238,92 +234,42 @@ void menu()
     printf("\n\nEnter your option: ");
     scanf("%d", &choice);
     
-    //char infix[MAX_EXPR_SIZE] = "(5 + 3) * 2 - 4 / (1 + 2)";
-    if (choice == 1) {
-        getInput();
-        menu();
-    }
-    else if (choice == 2)
+    switch(choice)
     {
-        printf("%s", infix);
-        /*
-        char* postfix = infixToPostfix();
-        printf("%d\n", evaluatePostfix(postfix));
-        free(postfix);*/
+        case 1:
+          printf("enter exp: ");
+          scanf("%s", infix);
+          menu();
+          break;
+        case 2:
+          postfix = infixToPostfix(infix);
+          if (postfix)
+          {
+            printf("successfully converted into postfix expression!\n");
+          }
+          menu();
+          break;
+        case 3:
+          evaluateResult = evaluatePostfix(infixToPostfix(infix));
+          if (evaluateResult)
+          {
+            printf("successfully evaluated the postfix expression!\n");
+          }
+          free(postfix);
+          menu();
+          break;
+        case 4:
+          display(infix);
+          break;
+        default:
+          out();
+          break;
     }
-    
-    // switch(choice)
-    // {
-    //     case 1:
-    //       getInput();
-    //       break;
-    //     case 2:
-    //       postfix = infixToPostfix(infix);
-    //       break;
-    //     case 3:
-    //       evaluateResult = evaluatePostfix(postfix);
-    //       free(postfix);
-    //       display();
-    //       //break;
-    //     case 4:
-    //       display();
-    //       break;
-    //     default:
-    //       out();
-    //       break;
-    // }
 }
-
-
-
-
-
 
 
 int main() {
     menu();
-    // char infix[MAX_EXPR_SIZE] = "(5 + 3) * 2 - 4 / (1 + 2)"; //"a+b*(c^d-e)^(f+g*h)-i";
-    // char post[MAX_EXPR_SIZE] = "53+2*412+/-";
-    // // Function call
-    // char* postfix = convert(infix);
-    // printf("%s\n", postfix);
-    // free(postfix);
-    
-//     char infix[MAX_EXPR_SIZE] = "(5 + 3) * 2 - 4 / (1 + 2)";
-// 	char post[MAX_EXPR_SIZE] = "53+2*412+/-";
-// 	// Function call
-// 	char* postfix = infixToPostfix(infix);
-// 	printf("%s\n", postfix);
-	
-// 	printf("%d\n", evaluatePostfix(postfix));
-	//free(postfix);
-
-    //menu();
-
-    // if (option == 2)
-    // {
-    //     //char* postfix = convert(infix);
-    //     printf("%d\n", evaluatePostfix(postfix));
-    //     free(postfix);
-    // }
-    // int option;
-    // int result;
-    // printf("1. convert\n2. evaluate\n3. display");
-    // scanf("%d", &option);
-    // switch(option)
-    // {
-    //     case 1:
-    //         printf("first option");
-    //         break;
-    //     case 2:
-    //         result = evaluatePostfix(postfix);
-    //         free(postfix);
-    //         printf("\n%d", result);
-    //         break;
-    //     case 3:
-    //         printf("\n%d", result);
-    //         break;
-    // }
     
     return 0;
 }
